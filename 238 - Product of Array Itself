@@ -1,0 +1,25 @@
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+
+    int newPrefixArray[] = new int[nums.length];
+    int newSuffixArray[] = new int[nums.length];
+    newPrefixArray[0] = 1;
+    newSuffixArray[nums.length-1] = 1;
+
+    for(int i =1;i<nums.length;i++){
+        newPrefixArray[i] = nums[i-1] * newPrefixArray[i-1];
+    }
+    for(int j = nums.length-2;j>=0;j--){
+        newSuffixArray[j] = newSuffixArray[j+1] * nums[j+1];
+        
+    }
+
+    for(int i = 0;i<nums.length;i++){
+        nums[i] = newPrefixArray[i] * newSuffixArray[i];
+    }
+
+
+    return nums;
+        
+    }
+}
