@@ -13,23 +13,26 @@ class Solution {
         int[] initial = new int[2];
         int lastSecondValue = Integer.MIN_VALUE;
 
+        initial = intervals[0];
+        for(int i = 1;i<intervals.length;i++){
 
-        for(int i = 0;i<intervals.length;i++){
-            initial = intervals[i];
-            if(initial[0]<=lastSecondValue){
+            if(intervals[i][0]<=initial[1] && intervals[i][1]<=initial[1]){
                 continue;
             }
-            for(int j = i+1;j<intervals.length;j++){
-                if(initial[1]>=intervals[j][0] && intervals[j][1]>=initial[1]){
-                    initial[1] = intervals[j][1];
-                }
+
+            if(intervals[i][0]<=initial[1] && intervals[i][1]>=initial[1]){
+                initial[1] = intervals[i][1];
             }
 
-            outer.add(initial);
-            lastSecondValue = initial[1]; 
-            initial = new int[2];
+            else{
+                outer.add(initial);
+                initial = new int[2];
+                initial = intervals[i];
+            }
+
         }
 
+        outer.add(initial);
         int[][] finalList = new int[outer.size()][2];
         for(int i = 0;i<outer.size();i++){
             finalList[i] = outer.get(i);
